@@ -1,7 +1,10 @@
 // vim: set ts=2 sw=2 et:
+import { defineNuxtConfig } from '@nuxt/bridge'
+import { VuetifyLoaderPlugin } from "vuetify-loader"
+
 import colors from 'vuetify/es5/util/colors'
 
-export default {
+export default defineNuxtConfig({
   srcDir: 'src',
 
   // Target: https://go.nuxtjs.dev/config-target
@@ -21,6 +24,8 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Khand:wght@700&family=Roboto:wght@400;500;700;900' },
+      { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css' },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
@@ -31,6 +36,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    "~/plugins/vuetify",
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -38,12 +44,8 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    // https://go.nuxtjs.dev/typescript
-    '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
-    // https://vite.nuxtjs.org/getting-started/config
-    'nuxt-vite'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -71,10 +73,29 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    transpile: ["vuetify/lib"],
+    plugins: [new VuetifyLoaderPlugin()],
+    loaders: {
+      sass: {
+        // @ts-ignore
+        additionalData: "@import '@/assets/styles/vuetify.scss'",
+      },
+    },
   },
 
   // https://nuxtjs.org/docs/features/configuration#edit-host-and-port
   server: {
     host: '0', // default: localhost
   },
-}
+
+  bridge: {
+    // Use Vite as the bundler instead of Webpack 4
+    vite: true,
+    // Enable Nuxt 3 compatible useMeta
+    meta: true,
+  },
+
+  vite: {
+    // Config for Vite
+  },
+})
