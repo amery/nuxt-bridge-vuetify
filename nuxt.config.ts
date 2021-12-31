@@ -1,7 +1,9 @@
 // vim: set ts=2 sw=2 et:
+import { defineNuxtConfig } from '@nuxt/bridge'
+
 import colors from 'vuetify/es5/util/colors'
 
-export default {
+export default defineNuxtConfig({
   srcDir: 'src',
 
   // Target: https://go.nuxtjs.dev/config-target
@@ -38,12 +40,8 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    // https://go.nuxtjs.dev/typescript
-    '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
-    // https://vite.nuxtjs.org/getting-started/config
-    'nuxt-vite'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -73,8 +71,46 @@ export default {
   build: {
   },
 
+  bridge: {
+
+    // -- Opt-in features --
+
+    // Use Vite as the bundler instead of Webpack 4
+    vite: true,
+
+    // Enable Nuxt 3 compatible useMeta
+    meta: true,
+
+    // -- Default features --
+
+    // Use legacy server instead of Nitro
+    // nitro: false,
+
+    // Disable nuxt 3 compatible `nuxtApp` interface
+    // app: false,
+
+    // Disable composition API support
+    // capi: false,
+
+    // Do not transpile modules
+    // transpile: false,
+
+    // Disable <script setup> support
+    // scriptSetup: false,
+
+    // Disable composables auto importing
+    // autoImports: false,
+
+    // Do not warn about module incompatibilities
+    // constraints: false
+  },
+
+  vite: {
+    // Config for Vite
+  },
+
   // https://nuxtjs.org/docs/features/configuration#edit-host-and-port
   server: {
     host: '0', // default: localhost
   },
-}
+})
